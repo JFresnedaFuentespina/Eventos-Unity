@@ -13,7 +13,7 @@ public class LoginManager : MonoBehaviour
     string password;
     public string loginUrl = "https://difreenet9.azurewebsites.net/api/Auth/login";
     int timeoutMs = 10000;
-    string bearerToken;
+    public string bearerToken;
     public TMP_InputField usernameTextInput;
     public TMP_InputField passwordTextInput;
     public Button loginButton;

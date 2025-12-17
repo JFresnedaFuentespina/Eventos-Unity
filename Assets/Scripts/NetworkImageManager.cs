@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Threading;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -7,7 +8,7 @@ public class NetworkImageManager : MonoBehaviour
 {
     [Header("Source")]
     [Tooltip("Full URL to the texture file on the dimedianetapi (png/jpg/etc).")]
-    public string textureUrl = "https://difreenet9.azurewebsites.net/api/Files/457";
+    public string textureUrl = "https://dimedianetapi9.azurewebsites.net/api/Files/457";
 
     [Header("UI Targets (assign at least one)")]
     public Image targetUIImage;
@@ -20,7 +21,7 @@ public class NetworkImageManager : MonoBehaviour
     void Start()
     {
         loginManager = FindFirstObjectByType<LoginManager>();
-        downloadButton.onClick.AddListener(LoadImageBlocking);
+        downloadButton.onClick.AddListener(LoadImageAsync);
     }
     private UnityWebRequest httpClient;
     private bool loadImageProgressEnabled = false;
@@ -62,6 +63,40 @@ public class NetworkImageManager : MonoBehaviour
         targetUIImage.sprite = sprite;
         targetUIImage.preserveAspect = true;
     }
+
+    public void LoadImageAsync()
+    {
+        // Cargar imagen con Coroutine
+        StartCoroutine(LoadImageCoroutine());
+    }
+
+    private IEnumerator LoadImageCoroutine()
+    {
+        using (httpClient = new UnityWebRequest(textureUrl + "?container=dimedianetblobs"))
+        {
+            Debug.Log("Getting image...");
+            httpClient.downloadHandler = new DownloadHandlerBuffer();
+            if (!string.IsNullOrEmpty(loginManager.bearerToken))
+            {
+                httpClient.SetRequestHeader("Authorization", "Bearer " + loginManager.bearerToken);
+            }
+            httpClient.SetRequestHeader("Accept", "/");
+            yield return httpClient.SendWebRequest(); // Devuelve un IEnumerator
+
+            Debug.Log("hpptClient.isDone = " + httpClient.isDone);
+
+            if (httpClient.result == UnityWebRequest.Result.ConnectionError || httpClient.result == UnityWebRequest.Result.ProtocolError)
+            {
+                Debug.Log(httpClient.error);
+            }
+            else
+            {
+                byte[] textureBinary = httpClient.downloadHandler.data;
+                ApplyDownloadedBytes(textureBinary);
+            }
+        }
+    }
+
     public void LoadImageBlocking()
     {
         using (httpClient = new UnityWebRequest(textureUrl + "?container=dimedianetblobs"))

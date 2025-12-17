@@ -1,9 +1,11 @@
 using System;
+using System.Collections;
 using System.IO;
 using System.Net;
 using System.Text;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 
 public class LoginManager : MonoBehaviour
@@ -11,7 +13,7 @@ public class LoginManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     string username;
     string password;
-    public string loginUrl = "https://difreenet9.azurewebsites.net/api/Auth/login";
+    public string loginUrl = "https://dimedianetapi9.azurewebsites.net/api/Auth/login";
     int timeoutMs = 10000;
     public string bearerToken;
     public TMP_InputField usernameTextInput;
@@ -19,7 +21,7 @@ public class LoginManager : MonoBehaviour
     public Button loginButton;
     void Start()
     {
-        loginButton.onClick.AddListener(LoginBlocking);
+        loginButton.onClick.AddListener(LoginAsync);
     }
     public void LoginBlocking()
     {
@@ -93,6 +95,61 @@ public class LoginManager : MonoBehaviour
             result.Error = ex.Message;
         }
     }
+
+    public void LoginAsync()
+    {
+        StartCoroutine(LoginCoroutine());
+    }
+
+    private IEnumerator LoginCoroutine()
+    {
+        username = usernameTextInput.text;
+        password = passwordTextInput.text;
+
+        var cred = new Credentials(username, password);
+        string json = JsonUtility.ToJson(cred);
+        byte[] body = Encoding.UTF8.GetBytes(json);
+
+        using (UnityWebRequest request = new UnityWebRequest(loginUrl, "POST"))
+        {
+            request.uploadHandler = new UploadHandlerRaw(body);
+            request.downloadHandler = new DownloadHandlerBuffer();
+            request.SetRequestHeader("Content-Type", "application/json");
+
+            yield return request.SendWebRequest();
+
+            var result = new LoginResult();
+
+            if (request.result == UnityWebRequest.Result.Success)
+            {
+                result.StatusCode = (int)request.responseCode;
+                result.RawResponse = request.downloadHandler.text;
+                result.Success = true;
+
+                result.Token = ExtractTokenFromJson(result.RawResponse);
+                bearerToken = result.Token;
+
+                Debug.Log("Login successful: " + bearerToken);
+            }
+            else
+            {
+                result.StatusCode = (int)request.responseCode;
+                result.RawResponse = request.downloadHandler.text;
+                result.Success = false;
+                result.Error = request.error;
+
+                // Algunas APIs devuelven JSON incluso en error
+                if (!string.IsNullOrEmpty(result.RawResponse))
+                {
+                    result.Token = ExtractTokenFromJson(result.RawResponse);
+                    bearerToken = result.Token;
+                }
+
+                Debug.LogError($"Login failed ({request.responseCode}): {request.error}");
+            }
+        }
+    }
+
     private static string ExtractTokenFromJson(string json)
     {
         if (string.IsNullOrEmpty(json)) return null;

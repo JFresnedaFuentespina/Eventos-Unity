@@ -967,7 +967,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -769.23785, y: 103.19647}
+  m_AnchoredPosition: {x: -529, y: 103.19647}
   m_SizeDelta: {x: 210.3813, y: 105.1907}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &715643854
@@ -1074,7 +1074,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dac7b4589bc477e4e809b481261a4cb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NetworkImageManager
-  textureUrl: https://difreenet9.azurewebsites.net/api/Files/457
+  textureUrl: https://dimedianetapi9.azurewebsites.net/api/Files/457
   targetUIImage: {fileID: 715643856}
   downloadButton: {fileID: 1481158242}
   loadImageProgressSlider: {fileID: 0}
@@ -1231,7 +1231,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -558.01483, y: 103.19647}
+  m_AnchoredPosition: {x: -426, y: 103.19647}
   m_SizeDelta: {x: 210.3813, y: 105.1907}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &899628587
@@ -1417,8 +1417,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 14
-  m_fontSizeBase: 14
+  m_fontSize: 30
+  m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1674,8 +1674,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 14
-  m_fontSizeBase: 14
+  m_fontSize: 30
+  m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2814,7 +2814,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e58b63d938e594e4697f70788639710d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LoginManager
-  loginUrl: https://difreenet9.azurewebsites.net/api/Auth/login
+  loginUrl: https://dimedianetapi9.azurewebsites.net/api/Auth/login
   bearerToken: 
   usernameTextInput: {fileID: 1315691278}
   passwordTextInput: {fileID: 1020831072}
@@ -3049,7 +3049,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -428.20947, y: 103.19647}
+  m_AnchoredPosition: {x: -375.11438, y: 103.19647}
   m_SizeDelta: {x: 105.1907, y: 105.1907}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1560462076
@@ -3185,7 +3185,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -365.0951, y: 103.19647}
+  m_AnchoredPosition: {x: -312, y: 103.19647}
   m_SizeDelta: {x: 210.3813, y: 105.1907}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1587442707
@@ -3513,8 +3513,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 14
-  m_fontSizeBase: 14
+  m_fontSize: 30
+  m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -3599,7 +3599,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -657.52527, y: 103.19647}
+  m_AnchoredPosition: {x: -483.52527, y: 103.19647}
   m_SizeDelta: {x: 105.1907, y: 105.1907}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1687745757
@@ -3942,8 +3942,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 14
-  m_fontSizeBase: 14
+  m_fontSize: 30
+  m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

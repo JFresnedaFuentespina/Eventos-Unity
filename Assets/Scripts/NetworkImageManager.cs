@@ -92,49 +92,9 @@ public class NetworkImageManager : MonoBehaviour
             else
             {
                 byte[] textureBinary = httpClient.downloadHandler.data;
-                yield return StartCoroutine(ApplyDownloadedBytesAsync(textureBinary));
+                ApplyDownloadedBytes(textureBinary);
             }
         }
-    }
-
-    public IEnumerator ApplyDownloadedBytesAsync(byte[] textureBinary)
-    {
-        int configuredMax = 16384;
-
-        if (textureBinary == null || textureBinary.Length == 0)
-        {
-            Debug.LogWarning("No texture bytes provided.");
-            yield return null;
-        }
-
-        var texture = new Texture2D(2, 2, TextureFormat.RGBA32, false);
-        if (!texture.LoadImage(textureBinary))
-        {
-            Debug.LogError("Failed to load image from bytes.");
-            UnityEngine.Object.Destroy(texture);
-            yield return null;
-        }
-
-        Debug.LogFormat("Loaded texture size: {0}x{1}. SystemInfo.maxTextureSize={2}", texture.width, texture.height, SystemInfo.maxTextureSize);
-
-        int deviceMax = TextureUtils.DefaultMaxDimension;
-        int maxDim = (configuredMax <= 0) ? deviceMax : Mathf.Min(configuredMax, deviceMax);
-
-        // Try to downscale to maxDim. If scaling fails internally, TextureUtils will retry with smaller sizes.
-        Texture2D safeTex = TextureUtils.EnsureTextureWithinMax(texture, maxDim, destroySourceIfScaled: true);
-
-        Debug.LogFormat("Using texture size: {0}x{1}", safeTex.width, safeTex.height);
-
-        if (safeTex == null)
-        {
-            Debug.LogError("No texture available after scaling.");
-            yield return null;
-        }
-
-        var sprite = Sprite.Create(safeTex, new Rect(0f, 0f, safeTex.width, safeTex.height), new Vector2(0.5f, 0.5f), 100f);
-        targetUIImage.sprite = sprite;
-        targetUIImage.preserveAspect = true;
-        yield return null;
     }
 
     public void LoadImageBlocking()
